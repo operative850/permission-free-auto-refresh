@@ -1,10 +1,10 @@
 const $ = (id) => document.getElementById(id);
 
 const UNITS = {
-  s: { ms: 1000, one: "second", many: "seconds" },
-  m: { ms: 60000, one: "minute", many: "minutes" },
-  h: { ms: 3600000, one: "hour", many: "hours" },
-  d: { ms: 86400000, one: "day", many: "days" }
+  s: { ms: 1000, one: "second", many: "seconds", def: 60 },
+  m: { ms: 60000, one: "minute", many: "minutes", def: 15 },
+  h: { ms: 3600000, one: "hour", many: "hours", def: 2 },
+  d: { ms: 86400000, one: "day", many: "days", def: 1 }
 };
 
 const ICONS = {
@@ -65,7 +65,10 @@ function setUnit(u) {
 }
 $("units").addEventListener("click", (e) => {
   const b = e.target.closest("button");
-  if (b) setUnit(b.dataset.u);
+  if (!b) return;
+  // Picking a unit fills in that unit's default interval
+  $("value").value = UNITS[b.dataset.u].def;
+  setUnit(b.dataset.u);
 });
 $("value").addEventListener("input", () => setUnit(unit));
 
@@ -174,7 +177,7 @@ $("stopAll").addEventListener("click", () => send({ type: "stopAll" }));
 // ---------- init ----------
 (async () => {
   paintThemeButton();
-  $("value").value = load("value", "30");
+  $("value").value = load("value", "60");
   setUnit(load("unit", "s"));
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });

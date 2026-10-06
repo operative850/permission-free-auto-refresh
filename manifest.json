@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Permission-free Auto Refresh",
   "short_name": "PF Auto Refresh",
-  "version": "2.0",
+  "version": "2.1",
   "description": "Auto refresh any tab on a timer. Zero permissions. Open source.",
   "icons": {
     "16": "icons/icon16.png",
